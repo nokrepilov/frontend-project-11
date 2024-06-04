@@ -1,85 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Webpack App</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RSS-reader</title>
-    <script defer src="/src/index.js"></script>
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-
-    <!-- Modal for posts-->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+  <body class="d-flex flex-column min-vh-100">
+    <main class="flex-grow-1" id="root">
+      <section class="container-fluid bg-dark p-5">
+        <div class="modal fade" tabindex="-1" id="modal" aria-label="hidden">
+          <div class="modal-dialog" id="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-break">
-                    <p class="descr"></p>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary full-article" href="#" role="button" target="_blank"
-                        rel="noopener noreferrer"></a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"></button>
-                </div>
+              <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button
+                  type="button"
+                  class="btn-close close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body text-break"></div>
+              <div class="modal-footer">
+                <a
+                  class="btn btn-primary full-article"
+                  href="#"
+                  role="button"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Читать полностью</a
+                >
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Закрыть
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-
-    <main class="flex-grow-1">
-        <section class="container-fluid bg-dark p-5">
-            <div class="row">
-                <div class="col-md-10 col-lg-8 mx-auto text-white">
-                    <h1 class="display-3 mb-0" id="header"></h1>
-                    <p class="lead" id="leadText"></p>
-
-                    <form action="" class="rss-form text-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-floating">
-                                    <input id="url-input" autofocus="" required="" name="url" aria-label="url"
-                                        class="form-control w-100" placeholder="" autocomplete="off">
-
-                                    <label for="url-input" id="labelInput"></label>
-                                </div>
-                            </div>
-
-                            <div class="col-auto">
-                                <button type="submit" aria-label="add" id="btnSubmit"
-                                    class="h-100 btn btn-lg btn-primary px-sm-5"></button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <p class="mt-2 mb-0 text-secondary" id="exampleUrl"></p>
-                    <p class='feedback m-0 position-absolute'></p>
+        <div class="row">
+          <div class="col-md-10 col-lg-8 mx-auto text-white">
+            <h1 class="display-3 mb-0">RSS агрегатор</h1>
+            <p class="lead">
+              Начните читать RSS сегодня! Это легко, это красиво.
+            </p>
+            <form action="" class="rss-form text-body" id="urlform">
+              <div class="row">
+                <div class="col">
+                  <div class="form-floating">
+                    <input
+                      autofocus="true"
+                      required=""
+                      id="inputAddress"
+                      name="rssypath"
+                      aria-label="url"
+                      class="form-control w-100"
+                      placeholder="ссылка RSS"
+                      autocomplete="off"
+                    />
+                    <label for="inputAddress">Ссылка RSS </label>
+                  </div>
                 </div>
-            </div>
+                <div class="col-auto">
+                  <button
+                    type="submit"
+                    aria-label="add"
+                    class="h-100 btn btn-lg btn-primary px-sm-5"
+                    id="submitbtn"
+                  >
+                    Добавить
+                  </button>
+                </div>
+              </div>
+            </form>
+            <p class="mt-2 mb-0 text-secondary">
+              Пример: https://lorem-rss.hexlet.app/feed
+            </p>
+            <p
+              class="feedback m-0 position-absolute small text-danger"
+              id="errortext"
+            ></p>
+          </div>
+        </div>
+      </section>
+      <section class="container-fluid container-xxl p-5">
+        <section id="content">
+          <div class="row">
+            <div
+              class="col-md-10 col-lg-8 order-1 mx-auto posts"
+              id="posts-container"
+            ></div>
+            <div
+              class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds"
+              id="feeds"
+            ></div>
+          </div>
         </section>
-
-        <section class="container-fluid container-xxl p-5">
-            <div class="row">
-                <div class="col-md-10 col-lg-8 order-1 mx-auto posts"></div>
-                <div class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds"></div>
-            </div>
-        </section>
-
+      </section>
     </main>
 
     <footer class="footer border-top py-3 mt-5 bg-light">
-        <div class="container-xl">
-            <div class="text-center" id="footer">
-                <span id="footerText"></span>
-                <a href="https://github.com/nokrepilov/frontend-project-11" role="button" target="_blank"
-                    rel="noopener noreferrer" id="footerLink"></a>
-            </div>
+      <div class="container-xl">
+        <div class="text-center">
+          created by
+          <a href="https://github.com/nokrepilov" target="_blank"
+            >Nikita Okrepilov</a
+          >
         </div>
+      </div>
     </footer>
-
-</body>
-
+  </body>
 </html>
