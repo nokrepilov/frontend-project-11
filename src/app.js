@@ -17,31 +17,36 @@ const validation = (url, links) => {
   return schema;
 };
 
-const makeId = (feed) => ({
-  ...feed,
+const addId = (object) => ({
+  ...object,
   id: uniqueId(),
-  posts: feed.posts.map((post) => ({
-    ...post,
-    id: uniqueId(),
-  })),
 });
 
+const makeId = (feed) => {
+  const feedWithId = addId(feed);
+  const postsWithId = feedWithId.posts.map((post) => addId(post));
+  return {
+    ...feedWithId,
+    posts: postsWithId,
+  };
+};
+
 const refreshFeeds = (state) => {
-  const promises = state.feeds.map((feed) => {
-    const url = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(
-      feed.link
-    )}`;
-    return axios.get(url, {
-      timeout: 10000,
-      params: {
-        disableCache: true,
-      },
-    });
-  });
-  Promise.all(promises).then((responses) => {
-    responses.forEach((resp, i) => {
-      const data = resp.data.contents;
-      const { link } = state.feeds[i];
+  const fetchFeed = async (feed) => {
+    const url = new URL("https://allorigins.hexlet.app/get");
+    url.searchParams.append("disableCache", "true");
+    url.searchParams.append("url", feed.link);
+
+    try {
+      const response = await axios.get(url.toString(), {
+        timeout: 10000,
+        params: {
+          disableCache: true,
+        },
+      });
+
+      const data = response.data.contents;
+      const { link } = feed;
       const { posts } = { link, ...parse(data) };
       const oldPostsLinks = state.posts.map((post) => post.link);
       const newPosts = posts.filter(
@@ -51,11 +56,17 @@ const refreshFeeds = (state) => {
         ...post,
         id: uniqueId(),
       }));
+
       state.posts = [...newPostsWithId, ...state.posts];
-    });
+    } catch (error) {
+      console.error("Error fetching feed:", error);
+    }
+
     render(state);
     setTimeout(() => refreshFeeds(state), 5000);
-  });
+  };
+
+  state.feeds.forEach((feed) => fetchFeed(feed));
 };
 
 const addNewFeed = (link, state) => {
@@ -92,13 +103,13 @@ const addNewFeed = (link, state) => {
     });
 };
 
-export default function App() {
+export default app = () => {
   const initialState = {
     feeds: [],
     posts: [],
     viewedPostsIds: new Set(),
     status: "filling", // loading, success, failed, filling
-    error: "",
+    error: null,
     modalPostId: null,
   };
 
@@ -159,4 +170,4 @@ export default function App() {
     }
   });
   refreshFeeds(state);
-}
+};
