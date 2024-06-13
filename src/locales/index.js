@@ -1,9 +1,4 @@
-import translationRU from "./ru";
+import "bootstrap";
+import ru from "./ru.js";
 
-const resources = {
-  ru: {
-    translation: translationRU,
-  },
-};
-
-export default resources;
+export default { ru };

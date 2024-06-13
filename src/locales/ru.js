@@ -1,19 +1,24 @@
 export default {
-  errors: {
-    urlRequired: "Обязательно введите URL",
-    urlInvalid: "Ссылка должна быть валидным URL",
-    rssExists: "RSS уже существует",
-    networkError: "Ошибка сети",
-    invalidRSS: "Ресурс не содержит валидный RSS",
-  },
-  interface: {
-    loadSuccess: "RSS успешно загружен",
-    emptyField: "Не должно быть пустым",
-    preview: "Просмотр",
+  translation: {
+    interfaceTexts: {
+      rssAggregatorTitle: "RSS агрегатор",
+      rssAggregatorDescription:
+        "Начните читать RSS сегодня! Это легко, это красиво.",
+      rssFormPlaceholder: "Ссылка RSS",
+      rssFormButton: "Добавить",
+      rssFormExample: "Пример: https://lorem-rss.hexlet.app/feed",
+      previewButton: "Просмотр",
+      closeButton: "Закрыть",
+      readButton: "Читать полностью",
+    },
+    feedBackTexts: {
+      invalidURLError: "Ссылка должна быть валидным URL",
+      rssExistsError: "RSS уже существует",
+      correctURL: "RSS успешно загружен",
+      networkError: "Ошибка сети",
+      invalidRSSResource: "Ресурс не содержит валидный RSS",
+    },
     posts: "Посты",
     feeds: "Фиды",
-    submitButton: "Добавить",
-    readMoreButton: "Читать полностью",
-    closeButton: "Закрыть",
   },
 };
