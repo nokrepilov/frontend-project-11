@@ -1,24 +1,39 @@
 export default {
   translation: {
-    interfaceTexts: {
-      rssAggregatorTitle: "RSS агрегатор",
-      rssAggregatorDescription:
-        "Начните читать RSS сегодня! Это легко, это красиво.",
-      rssFormPlaceholder: "Ссылка RSS",
-      rssFormButton: "Добавить",
-      rssFormExample: "Пример: https://lorem-rss.hexlet.app/feed",
-      previewButton: "Просмотр",
-      closeButton: "Закрыть",
-      readButton: "Читать полностью",
+    baseTextUI: {
+      header: "RSS агрегатор",
+      leadText: "Начните читать RSS сегодня! Это легко, это красиво.",
+      placeholderInput: "ссылка RSS",
+      labelInput: "Ссылка RSS",
+      btnSubmit: "Добавить",
+      exampleUrl: "Пример: https://ru.hexlet.io/lessons.rss",
+      footerText: "Ссылка на проект:",
+      footerLink: "GitHub",
     },
-    feedBackTexts: {
-      invalidURLError: "Ссылка должна быть валидным URL",
-      rssExistsError: "RSS уже существует",
-      correctURL: "RSS успешно загружен",
+
+    mistakes: {
+      url: "Ссылка должна быть валидным URL",
+      required: "Не должно быть пустым",
+      notOneOf: "RSS уже существует",
+      noDataContents: "Ресурс не содержит валидный RSS",
       networkError: "Ошибка сети",
-      invalidRSSResource: "Ресурс не содержит валидный RSS",
     },
-    posts: "Посты",
-    feeds: "Фиды",
+    confirmation: {
+      loaded: "RSS успешно загружен",
+    },
+
+    titles: {
+      feeds: "Фиды",
+      posts: "Посты",
+    },
+
+    buttons: {
+      watchPost: "Просмотр",
+    },
+
+    modal: {
+      readPost: "Читать полностью",
+      closeModal: "Закрыть",
+    },
   },
 };
