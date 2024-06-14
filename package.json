@@ -1,51 +1,50 @@
 {
-  "name": "@hexlet/code",
-  "version": "1.0.0",
-  "description": "website rss reader",
-  "main": "./src/js/main.js",
-  "scripts": {
-    "start": "webpack serve --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nokrepilov/frontend-project-11.git"
-  },
-  "author": "Nikita Okrepilov",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nokrepilov/frontend-project-11/issues"
-  },
-  "homepage": "https://github.com/nokrepilov/frontend-project-11#readme",
-  "devDependencies": {
-    "@babel/core": "^7.23.3",
-    "@babel/preset-env": "^7.23.3",
-    "@webpack-cli/generators": "^3.0.7",
-    "babel-loader": "^9.1.3",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.8.1",
-    "css-minimizer-webpack-plugin": "^5.0.1",
-    "eslint": "^8.54.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jest": "^27.6.0",
-    "html-webpack-plugin": "^5.5.3",
-    "mini-css-extract-plugin": "^2.7.6",
-    "postcss-loader": "^7.3.3",
-    "sass": "^1.69.5",
-    "sass-loader": "^13.3.2",
-    "style-loader": "^3.3.3",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
-  },
-  "dependencies": {
-    "axios": "^1.6.2",
-    "bootstrap": "^5.3.2",
-    "i18next": "^23.7.8",
-    "on-change": "^4.0.2",
-    "short-uuid": "^4.2.2",
-    "yup": "^1.3.2"
-  }
+    "name": "@hexlet/code",
+    "version": "1.0.0",
+    "description": "My webpack project",
+    "main": "./src/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "webpack --mode=production --node-env=production",
+        "build:dev": "webpack --mode=development",
+        "build:prod": "webpack --mode=production --node-env=production",
+        "watch": "webpack --watch",
+        "serve": "webpack serve"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/core": "^7.23.3",
+        "@babel/preset-env": "^7.23.3",
+        "@webpack-cli/generators": "^3.0.7",
+        "babel-loader": "^9.1.3",
+        "css-loader": "^7.1.2",
+        "eslint": "^9.4.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.29.0",
+        "html-webpack-plugin": "^5.5.3",
+        "postcss-loader": "^8.1.1",
+        "sass": "^1.69.5",
+        "sass-loader": "^14.2.1",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.0.4"
+    },
+    "dependencies": {
+        "@humanwhocodes/config-array": "^0.13.0",
+        "@npmcli/move-file": "^3.0.0",
+        "@npmcli/package-json": "^5.2.0",
+        "axios": "^1.6.7",
+        "bootstrap": "^5.3.2",
+        "debuglog": "^1.0.1",
+        "i18next": "^23.7.18",
+        "inflight": "^1.0.6",
+        "lodash": "^4.17.21",
+        "npmlog": "^7.0.1",
+        "on-change": "^5.0.1",
+        "read-package-json": "^7.0.1",
+        "readdir-scoped-modules": "^1.1.0",
+        "yup": "^1.3.2"
+    }
 }
