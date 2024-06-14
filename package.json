@@ -1,50 +1,42 @@
 {
-    "name": "@hexlet/code",
-    "version": "1.0.0",
-    "description": "My webpack project",
-    "main": "./src/index.js",
-    "type": "module",
-    "scripts": {
-        "build": "webpack --mode=production --node-env=production",
-        "build:dev": "webpack --mode=development",
-        "build:prod": "webpack --mode=production --node-env=production",
-        "watch": "webpack --watch",
-        "serve": "webpack serve"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "@babel/core": "^7.23.3",
-        "@babel/preset-env": "^7.23.3",
-        "@webpack-cli/generators": "^3.0.7",
-        "babel-loader": "^9.1.3",
-        "css-loader": "^7.1.2",
-        "eslint": "^9.4.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-plugin-import": "^2.29.0",
-        "html-webpack-plugin": "^5.5.3",
-        "postcss-loader": "^8.1.1",
-        "sass": "^1.69.5",
-        "sass-loader": "^14.2.1",
-        "style-loader": "^4.0.0",
-        "webpack": "^5.89.0",
-        "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^5.0.4"
-    },
-    "dependencies": {
-        "@humanwhocodes/config-array": "^0.13.0",
-        "@npmcli/move-file": "^3.0.0",
-        "@npmcli/package-json": "^5.2.0",
-        "axios": "^1.6.7",
-        "bootstrap": "^5.3.2",
-        "debuglog": "^1.0.1",
-        "i18next": "^23.7.18",
-        "inflight": "^1.0.6",
-        "lodash": "^4.17.21",
-        "npmlog": "^7.0.1",
-        "on-change": "^5.0.1",
-        "read-package-json": "^7.0.1",
-        "readdir-scoped-modules": "^1.1.0",
-        "yup": "^1.3.2"
-    }
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "RSS-agregator: displays and updates added RSS links",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nokrepilov/frontend-project-11.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nokrepilov/frontend-project-11/issues"
+  },
+  "homepage": "https://github.com/nokrepilov/frontend-project-11#readme",
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@webpack-cli/generators": "^3.0.7",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^6.10.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "html-webpack-plugin": "^5.6.0",
+    "postcss-loader": "^8.1.1",
+    "sass": "^1.71.1",
+    "sass-loader": "^14.1.1",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
+    "i18next": "^23.10.1",
+    "lodash": "^4.17.21",
+    "on-change": "^5.0.1",
+    "yup": "^1.4.0"
+  }
 }
