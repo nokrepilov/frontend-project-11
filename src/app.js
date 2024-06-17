@@ -1,112 +1,122 @@
 import i18next from "i18next";
 import axios from "axios";
-import * as yup from "yup";
-import { uniqueId } from "lodash";
+import _ from "lodash";
 import resources from "./locales/index.js";
-import watch from "./view.js";
-import parseData from "./utils/parser.js";
-import validate from "./utils/validate.js";
-import createURL from "./utils/createURL.js";
-import checkAndUpdatePosts from "./utils/checkAndUpdatePosts.js";
+import initStartView from "./view/initStartView.js";
+import viewFeedAndPosts from "./view/view.js";
+import validator from "./utils/validator.js";
+import getProxy from "./utils/proxify.js";
+import parserToXml from "./utils/parser.js";
+import updatePosts from "./utils/updater.js";
 
-export default async () => {
-  const defaultLang = "ru";
-
-  const i18n = i18next.createInstance();
-  await i18n.init({
-    lng: defaultLang,
-    debug: false,
-    resources,
-  });
-
-  yup.setLocale({
-    mixed: {
-      url: () => ({ key: "feedBackTexts.invalidURLError" }),
-      notOneOf: () => ({ key: "feedBackTexts.rssExistsError" }),
-    },
-  });
-
-  const elements = {
-    staticTextElements: {
-      rssAggregatorTitle: document.querySelector("h1.display-3"),
-      rssAggregatorDescription: document.querySelector("p.lead"),
-      rssFormPlaceholder: document.querySelector('label[for="url-input"]'),
-      rssFormButton: document.querySelector('button[aria-label="add"]'),
-      rssFormExample: document.querySelector("p.mt-2.mb-0.text-secondary"),
-    },
-    modalElements: {
-      modalTitle: document.querySelector(".modal-title"),
-      modalBody: document.querySelector(".modal-body"),
-      readMoreButton: document.querySelector(".full-article"),
-      modalCloseButton: document.querySelector(".btn-secondary"),
-    },
-    input: document.querySelector("input"),
-    feedbackElement: document.querySelector(".feedback"),
-    postContainer: document.querySelector(".posts"),
-    feedContainer: document.querySelector(".feeds"),
-  };
-
+const app = () => {
+  const { ru } = resources;
   const state = {
-    errors: "",
-    isValid: false,
-    urlUniqueLinks: [],
-    posts: [],
+    rssForm: {
+      stateForm: "filling",
+      inputValueStatus: true,
+      error: null,
+    },
     feeds: [],
+    posts: [],
     uiState: {
-      touchedPosts: new Set(),
-      activePostId: "",
+      visitedLinks: new Set(),
+      modalId: null,
     },
   };
 
-  const watchedState = watch(i18n, state, elements);
-
-  const form = document.querySelector("form");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const url = formData.get("url");
-
-    validate(url, watchedState.urlUniqueLinks)
-      .then(() => axios.get(createURL(url)))
-      .then((response) => {
-        const responseData = response.data.contents;
-        const { feeds, posts } = parseData(responseData);
-        const feedsWithId = feeds.map((feed) => ({ ...feed, id: uniqueId() }));
-        const postsWithId = posts.map((post) => ({ ...post, id: uniqueId() }));
-        watchedState.feeds = feedsWithId;
-        watchedState.posts = postsWithId;
-        watchedState.isValid = true;
-        watchedState.urlUniqueLinks.push(url);
-        watchedState.errors = "";
-      })
-      .catch((error) => {
-        watchedState.isValid = false;
-        switch (error.name) {
-          case "AxiosError":
-            watchedState.errors = "feedBackTexts.networkError";
-            break;
-          case "ParserError":
-            watchedState.errors = "feedBackTexts.invalidRSSResource";
-            break;
-          default:
-            watchedState.errors = error.message;
-            break;
-        }
-      });
+  const i18nextInstance = i18next.createInstance();
+  i18nextInstance.init({
+    lng: "ru",
+    debug: false,
+    resources: {
+      ru,
+    },
   });
 
-  checkAndUpdatePosts(watchedState);
+  const elementsForStartView = {
+    header: document.querySelector("h1"),
+    headerDescription: document.querySelector('p[class="lead"]'),
+    labelForUrlInput: document.querySelector(".form-floating label"),
+    inputPlaceholder: document.querySelector(".form-floating input"),
+    exampleLink: document.querySelector('p[class="mt-2 mb-0 text-white-50"]'),
+    rssButtonAdd: document.querySelector(".col-auto button"),
+    modalButtonReadFully: document.querySelector(".modal-footer a"),
+    modalButtonClose: document.querySelector(".modal-footer button"),
+  };
 
-  elements.postContainer.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
-      const postId = e.target.id;
-      watchedState.uiState.touchedPosts.add(postId);
-    }
-    if (e.target.tagName === "BUTTON") {
-      const button = e.target;
-      const { postId } = button.dataset;
-      watchedState.uiState.touchedPosts.add(postId);
-      watchedState.uiState.activePostId = postId;
-    }
+  initStartView(elementsForStartView, i18nextInstance);
+
+  const elementsForInitFeedAndPosts = {
+    form: document.querySelector("form"),
+    inputEl: document.querySelector("#url-input"),
+    buttonAdd: document.querySelector('button[type="submit"]'),
+    feedbackEl: document.querySelector(".feedback"),
+    feedsEl: document.querySelector(".feeds"),
+    postsEl: document.querySelector(".posts"),
+    modalTitle: document.querySelector(".modal-title"),
+    modalBody: document.querySelector(".modal-body"),
+    modalFooter: document.querySelector(".modal-footer"),
+  };
+
+  const watchedState = viewFeedAndPosts(
+    state,
+    elementsForInitFeedAndPosts,
+    i18nextInstance
+  );
+
+  elementsForInitFeedAndPosts.form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    watchedState.rssForm.stateForm = "filling";
+    const formData = new FormData(e.target);
+    const url = formData.get("url");
+    const urlsList = watchedState.feeds.map((feed) => feed.url);
+    validator(url, urlsList, i18nextInstance)
+      .then((validUrl) => {
+        watchedState.rssForm.error = null;
+        watchedState.rssForm.stateForm = "processing";
+        return axios.get(getProxy(validUrl));
+      })
+      .then((response) => {
+        const [feed, posts] = parserToXml(response.data.contents);
+        const newFeed = { ...feed, id: _.uniqueId(), url };
+        const newPosts = posts.map((post) => ({
+          ...post,
+          id: _.uniqueId(),
+          feedId: newFeed.id,
+        }));
+        watchedState.feeds = [newFeed, ...watchedState.feeds];
+        watchedState.posts = [...newPosts, ...watchedState.posts];
+        watchedState.rssForm.stateForm = "sucess";
+      })
+      .catch((err) => {
+        watchedState.rssForm.inputValueStatus = false;
+        if (err.name === "ValidationError") {
+          watchedState.rssForm.error = err.message;
+        } else if (err.isParseError) {
+          watchedState.rssForm.error = "form.errors.notContainValidRss";
+        } else if (axios.isAxiosError(err)) {
+          watchedState.rssForm.error = "form.errors.networkError";
+        } else {
+          watchedState.rssForm.error = err;
+        }
+        watchedState.rssForm.stateForm = "filling";
+      });
+
+    elementsForInitFeedAndPosts.postsEl.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        const { id } = event.target.dataset;
+        watchedState.uiState.visitedLinks.add(id);
+      }
+      if (event.target.closest("button")) {
+        const { id } = event.target.dataset;
+        watchedState.uiState.visitedLinks.add(id);
+        watchedState.uiState.modalId = id;
+      }
+    });
+
+    setTimeout(() => updatePosts(watchedState), 5000);
   });
 };
+
+export default app;
