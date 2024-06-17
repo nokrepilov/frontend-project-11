@@ -1,16 +1,18 @@
----
-env:
-  node: true
-  browser: true
 
-extends:
-  - "airbnb-base"
-
-parserOptions:
-  ecmaVersion: latest
-
-rules:
-  no-console: 0
-  import/extensions: 0
-  no-param-reassign: 0
-  js: 0
+  env: {
+    node: true,
+    browser: true
+  },
+  extends: [
+    "airbnb-base"
+  ],
+  parserOptions: {
+    ecmaVersion: "latest"
+  },
+  rules: {
+    "quotes": ["error", "double"], // Разрешаем использование двойных кавычек
+    "no-console": 0,
+    "import/extensions": 0,
+    "no-param-reassign": 0,
+    "js": 0
+  }
