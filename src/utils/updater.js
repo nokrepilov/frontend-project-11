@@ -1,7 +1,7 @@
-import _ from "lodash";
-import axios from "axios";
-import getProxy from "./proxify.js";
-import parserToXml from "./parser.js";
+import _ from 'lodash';
+import axios from 'axios';
+import getProxy from './proxify.js';
+import parserToXml from './parser.js';
 
 const updatePosts = (watchedState) => {
   const { feeds, posts } = watchedState;
@@ -12,7 +12,7 @@ const updatePosts = (watchedState) => {
         const [, gottenPosts] = parserToXml(response.data.contents);
         const oldPosts = posts.filter((post) => post.feedId === id);
         const allPosts = [...gottenPosts, ...oldPosts];
-        const notRepeatedPosts = _.uniqBy(allPosts, "link");
+        const notRepeatedPosts = _.uniqBy(allPosts, 'link');
         if (gottenPosts.length > watchedState.posts.length) {
           watchedState.posts = notRepeatedPosts;
         }
