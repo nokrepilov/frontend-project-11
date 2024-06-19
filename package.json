@@ -1,30 +1,43 @@
 {
-    "name": "@hexlet/code",
-    "version": "1.0.0",
-    "description": "RSS-agregator: displays and updates added RSS links",
-    "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://git@github.com/nokrepilov/frontend-project-11.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/nokrepilov/frontend-project-11/issues"
-    },
-    "homepage": "https://github.com/nokrepilov/frontend-project-11#readme",
-    "dependencies": {
-        "@jest/globals": "^29.7.0",
-        "commander": "^12.0.0",
-        "js-yaml": "^4.1.0",
-        "lodash": "^4.17.21"
-      },
-      "devDependencies": {
-        "@babel/preset-env": "^7.24.3",
-        "eslint": "^8.57.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-plugin-import": "^2.29.1",
-        "eslint-plugin-jest": "^27.9.0",
-        "jest": "^29.7.0"
-      }
-    }
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "RSS-agregator: displays and updates added RSS links",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx webpack --mode production",
+    "start": "npx webpack --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@eslint/js": "^9.3.0",
+    "autoprefixer": "^10.4.19",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.2",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "globals": "^15.3.0",
+    "html-webpack-plugin": "^5.6.0",
+    "postcss-loader": "^8.1.1",
+    "sass": "^1.77.2",
+    "sass-loader": "^14.2.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "i18next": "^23.11.5",
+    "on-change": "^5.0.1",
+    "yup": "^1.4.0"
+  }
+}
