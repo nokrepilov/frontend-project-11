@@ -58,19 +58,10 @@ const renderPosts = (state, elements, i18nextInstance) => {
 
   state.posts.forEach(({ id, title, link }) => {
     const liEl = document.createElement('li');
-    liEl.classList.add(
-      'list-group-item',
-      'd-flex',
-      'justify-content-between',
-      'align-items-start',
-      'border-0',
-      'border-end-0'
-    );
+    liEl.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
     const aEl = document.createElement('a');
-    const currentClass = state.uiState.visitedLinks.has(id)
-      ? 'fw-normal'
-      : 'fw-bold';
+    const currentClass = state.uiState.visitedLinks.has(id) ? 'fw-normal' : 'fw-bold';
     aEl.classList.add(currentClass);
     aEl.setAttribute('href', link);
     aEl.setAttribute('data-id', id);
@@ -118,52 +109,51 @@ const renderVisitedLinks = (links) => {
   currentLink.classList.toggle('fw-normal');
 };
 
-const renderFeedAndPosts = (state, elements, i18nextInstance) =>
-  onChange(state, (path, value) => {
-    switch (path) {
-      case 'uiState.modalId':
-        renderModalWindow(state, elements, value);
-        break;
-      case 'uiState.visitedLinks':
-        renderVisitedLinks(value);
-        break;
-      case 'feeds':
-        renderFeeds(state, elements, i18nextInstance);
-        break;
-      case 'posts':
-        renderPosts(state, elements, i18nextInstance);
-        break;
-      case 'rssForm.error':
-        renderError(value, elements, i18nextInstance);
-        break;
-      case 'rssForm.inputValueStatus':
-        if (!value) {
-          elements.inputEl.classList.add('is-invalid');
-          return;
-        }
-        elements.inputEl.classList.remove('is-invalid');
-        break;
-      case 'rssForm.stateForm':
-        if (value === 'filling') {
-          elements.buttonAdd.disabled = false;
-          return;
-        }
-        if (value === 'processing') {
-          elements.buttonAdd.disabled = true;
-          return;
-        }
-        if (value === 'sucess') {
-          elements.buttonAdd.disabled = false;
-          elements.form.reset();
-          elements.form.focus();
-          elements.feedbackEl.classList.remove('text-danger');
-          elements.feedbackEl.classList.add('text-success');
-          elements.feedbackEl.textContent = i18nextInstance.t('form.succesAdd');
-        }
-        break;
-      default:
-        throw new Error('Unknown path');
-    }
-  });
+const renderFeedAndPosts = (state, elements, i18nextInstance) => onChange(state, (path, value) => {
+  switch (path) {
+    case 'uiState.modalId':
+      renderModalWindow(state, elements, value);
+      break;
+    case 'uiState.visitedLinks':
+      renderVisitedLinks(value);
+      break;
+    case 'feeds':
+      renderFeeds(state, elements, i18nextInstance);
+      break;
+    case 'posts':
+      renderPosts(state, elements, i18nextInstance);
+      break;
+    case 'rssForm.error':
+      renderError(value, elements, i18nextInstance);
+      break;
+    case 'rssForm.inputValueStatus':
+      if (!value) {
+        elements.inputEl.classList.add('is-invalid');
+        return;
+      }
+      elements.inputEl.classList.remove('is-invalid');
+      break;
+    case 'rssForm.stateForm':
+      if (value === 'filling') {
+        elements.buttonAdd.disabled = false;
+        return;
+      }
+      if (value === 'processing') {
+        elements.buttonAdd.disabled = true;
+        return;
+      }
+      if (value === 'sucess') {
+        elements.buttonAdd.disabled = false;
+        elements.form.reset();
+        elements.form.focus();
+        elements.feedbackEl.classList.remove('text-danger');
+        elements.feedbackEl.classList.add('text-success');
+        elements.feedbackEl.textContent = i18nextInstance.t('form.succesAdd');
+      }
+      break;
+    default:
+      throw new Error('Unknown path');
+  }
+});
 
 export default renderFeedAndPosts;

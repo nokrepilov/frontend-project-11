@@ -62,7 +62,7 @@ const app = () => {
   const watchedState = viewFeedAndPosts(
     state,
     elementsForInitFeedAndPosts,
-    i18nextInstance
+    i18nextInstance,
   );
 
   elementsForInitFeedAndPosts.form.addEventListener('submit', (e) => {
