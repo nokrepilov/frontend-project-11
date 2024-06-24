@@ -3,6 +3,11 @@
     "version": "1.0.0",
     "description": "RSS-agregator: displays and updates added RSS links",
     "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npm run build"
+      },
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/nokrepilov/frontend-project-11.git"
