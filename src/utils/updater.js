@@ -3,8 +3,9 @@ import axios from 'axios';
 import getProxy from './proxify.js';
 import parserToXml from './parser.js';
 
+const updateInterval = 5000; // Интервал обновления в миллисекундах
+
 const updatePosts = (watchedState) => {
-  const updateInterval = 5000; // Интервал обновления в миллисекундах
 
   const { feeds, posts } = watchedState;
   const promises = feeds.map(({ url, id }) => axios.get(getProxy(url))
@@ -22,4 +23,4 @@ const updatePosts = (watchedState) => {
     .finally(() => setTimeout(() => updatePosts(watchedState), updateInterval));
 };
 
-export default updatePosts;
+export default { updatePosts, updateInterval };
