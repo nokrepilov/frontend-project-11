@@ -10,7 +10,7 @@ import parserToXml from './utils/parser.js';
 import updatePosts from './utils/updater.js';
 
 const app = () => {
-  const updateInterval = 6000; // Интервал обновления в миллисекундах
+  const updateInterval = 3000; // Интервал обновления в миллисекундах
 
   const { ru } = resources;
   const state = {
