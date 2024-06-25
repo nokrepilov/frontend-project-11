@@ -119,7 +119,7 @@ const app = () => {
       }
     });
 
-    setTimeout(() => updatePosts(watchedState), updateInterval);
+    setTimeout(() => updatePosts(watchedState, updateInterval), updateInterval);
   });
 };
 
