@@ -7,9 +7,11 @@ import viewFeedAndPosts from './view/view.js';
 import validator from './utils/validator.js';
 import getProxy from './utils/proxify.js';
 import parserToXml from './utils/parser.js';
-import {updatePosts, updateInterval} from './utils/updater.js';
+import updatePosts from './utils/updater.js';
 
 const app = () => {
+  const updateInterval = 5000; // Интервал обновления в миллисекундах
+
   const { ru } = resources;
   const state = {
     rssForm: {
