@@ -22,4 +22,4 @@ const updatePosts = (watchedState) => {
     .finally(() => setTimeout(() => updatePosts(watchedState), updateInterval));
 };
 
-export default { updatePosts, updateInterval };
+export default updatePosts;
