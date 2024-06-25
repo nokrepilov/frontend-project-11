@@ -9,3 +9,7 @@ hexlet-code-1.0.0.tgz
 dist
 
 assets
+
+.DS_Store
+
+.vscode/

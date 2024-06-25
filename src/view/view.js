@@ -1,19 +1,20 @@
 import onChange from 'on-change';
 
 const renderFeeds = (state, elements, i18nextInstance) => {
-  elements.feedsEl.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+
   const divEl = document.createElement('div');
   divEl.classList.add('card', 'border-0');
-  elements.feedsEl.append(divEl);
+  fragment.appendChild(divEl);
 
   const divFeedTitle = document.createElement('div');
   divFeedTitle.classList.add('card-body');
-  divEl.append(divFeedTitle);
+  divEl.appendChild(divFeedTitle);
 
   const h2Feed = document.createElement('h2');
   h2Feed.classList.add('card-title', 'h4');
   h2Feed.textContent = i18nextInstance.t('feeds.title');
-  divFeedTitle.append(h2Feed);
+  divFeedTitle.appendChild(h2Feed);
 
   const ulFeedDescription = document.createElement('ul');
   ulFeedDescription.classList.add('list-group', 'border-0', 'rounded-0');
@@ -25,33 +26,37 @@ const renderFeeds = (state, elements, i18nextInstance) => {
     const h3Description = document.createElement('h3');
     h3Description.classList.add('h6', 'm-0');
     h3Description.textContent = feed.title;
-    liDescription.append(h3Description);
+    liDescription.appendChild(h3Description);
 
     const pDescription = document.createElement('p');
     pDescription.classList.add('m-0', 'small', 'text-black-50');
     pDescription.textContent = feed.description;
-    liDescription.append(pDescription);
+    liDescription.appendChild(pDescription);
 
-    ulFeedDescription.append(liDescription);
+    ulFeedDescription.appendChild(liDescription);
   });
 
-  divEl.append(ulFeedDescription);
+  divEl.appendChild(ulFeedDescription);
+
+  elements.feedsEl.innerHTML = '';
+  elements.feedsEl.appendChild(fragment);
 };
 
 const renderPosts = (state, elements, i18nextInstance) => {
-  elements.postsEl.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+
   const divEl = document.createElement('div');
   divEl.classList.add('card', 'border-0');
-  elements.postsEl.append(divEl);
+  fragment.appendChild(divEl);
 
   const divPostsTitle = document.createElement('div');
   divPostsTitle.classList.add('card-body');
-  divEl.append(divPostsTitle);
+  divEl.appendChild(divPostsTitle);
 
   const h2El = document.createElement('h2');
   h2El.classList.add('card-title', 'h4');
   h2El.textContent = i18nextInstance.t('posts.title');
-  divPostsTitle.append(h2El);
+  divPostsTitle.appendChild(h2El);
 
   const ulPosts = document.createElement('ul');
   ulPosts.classList.add('list-group', 'border-0', 'rounded-0');
@@ -66,9 +71,9 @@ const renderPosts = (state, elements, i18nextInstance) => {
     aEl.setAttribute('href', link);
     aEl.setAttribute('data-id', id);
     aEl.setAttribute('target', '_blank');
-    aEl.setAttribute('rel', 'oopener noreferrer');
+    aEl.setAttribute('rel', 'noopener noreferrer');
     aEl.textContent = title;
-    liEl.append(aEl);
+    liEl.appendChild(aEl);
 
     const buttonEl = document.createElement('button');
     buttonEl.classList.add('btn', 'btn-outline-primary', 'btn-sm');
@@ -78,11 +83,15 @@ const renderPosts = (state, elements, i18nextInstance) => {
     buttonEl.setAttribute('data-bs-target', '#modal');
     buttonEl.textContent = i18nextInstance.t('posts.buttonText');
 
-    liEl.append(buttonEl);
+    liEl.appendChild(buttonEl);
 
-    ulPosts.append(liEl);
+    ulPosts.appendChild(liEl);
   });
-  divEl.append(ulPosts);
+
+  divEl.appendChild(ulPosts);
+
+  elements.postsEl.innerHTML = '';
+  elements.postsEl.appendChild(fragment);
 };
 
 const renderError = (error, elements, i18nextInstance) => {
@@ -142,13 +151,13 @@ const renderFeedAndPosts = (state, elements, i18nextInstance) => onChange(state,
         elements.buttonAdd.disabled = true;
         return;
       }
-      if (value === 'sucess') {
+      if (value === 'success') {
         elements.buttonAdd.disabled = false;
         elements.form.reset();
         elements.form.focus();
         elements.feedbackEl.classList.remove('text-danger');
         elements.feedbackEl.classList.add('text-success');
-        elements.feedbackEl.textContent = i18nextInstance.t('form.succesAdd');
+        elements.feedbackEl.textContent = i18nextInstance.t('form.successAdd');
       }
       break;
     default:

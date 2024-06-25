@@ -3,7 +3,7 @@ import axios from 'axios';
 import getProxy from './proxify.js';
 import parserToXml from './parser.js';
 
-const updatePosts = (watchedState) => {
+const updatePosts = (watchedState, updateInterval) => {
   const { feeds, posts } = watchedState;
   const promises = feeds.map(({ url, id }) => axios.get(getProxy(url))
     .then((response) => {
@@ -17,7 +17,7 @@ const updatePosts = (watchedState) => {
     })
     .catch(console.error));
   Promise.all(promises)
-    .finally(() => setTimeout(() => updatePosts(watchedState), 5000));
+    .finally(() => setTimeout(() => updatePosts(watchedState, updateInterval), updateInterval));
 };
 
 export default updatePosts;

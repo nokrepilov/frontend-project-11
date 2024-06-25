@@ -10,6 +10,8 @@ import parserToXml from './utils/parser.js';
 import updatePosts from './utils/updater.js';
 
 const app = () => {
+  const updateInterval = 5000; // Интервал обновления в миллисекундах
+
   const { ru } = resources;
   const state = {
     rssForm: {
@@ -104,18 +106,20 @@ const app = () => {
       });
 
     elementsForInitFeedAndPosts.postsEl.addEventListener('click', (event) => {
-      if (event.target.closest('a')) {
+      const link = event.target.closest('a');
+      const button = event.target.closest('button');
+
+      if (link || button) {
         const { id } = event.target.dataset;
         watchedState.uiState.visitedLinks.add(id);
-      }
-      if (event.target.closest('button')) {
-        const { id } = event.target.dataset;
-        watchedState.uiState.visitedLinks.add(id);
-        watchedState.uiState.modalId = id;
+
+        if (button) {
+          watchedState.uiState.modalId = id;
+        }
       }
     });
 
-    setTimeout(() => updatePosts(watchedState), 5000);
+    setTimeout(() => updatePosts(watchedState, updateInterval), updateInterval);
   });
 };
 
