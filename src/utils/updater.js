@@ -17,7 +17,7 @@ const updatePosts = (watchedState, updateInterval) => {
     })
     .catch(console.error));
   Promise.all(promises)
-    .finally(() => setTimeout(() => updatePosts(watchedState, updateInterval), updateInterval));
+    .finally(() => setTimeout(() => updatePosts(watchedState), updateInterval));
 };
 
 export default updatePosts;
