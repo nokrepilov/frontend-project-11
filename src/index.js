@@ -1,4 +1,4 @@
-import 'bootstrap/scss/bootstrap.scss';
+import './styles.scss';
 import 'bootstrap';
 import app from './app.js';
 
