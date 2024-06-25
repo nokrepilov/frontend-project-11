@@ -104,11 +104,13 @@ const app = () => {
       });
 
     elementsForInitFeedAndPosts.postsEl.addEventListener('click', (event) => {
-      if (event.target.closest('a') || event.target.closest('button')) {
+      if (event.target.closest('a')) {
         const { id } = event.target.dataset;
         watchedState.uiState.visitedLinks.add(id);
       }
       if (event.target.closest('button')) {
+        const { id } = event.target.dataset;
+        watchedState.uiState.visitedLinks.add(id);
         watchedState.uiState.modalId = id;
       }
     });
