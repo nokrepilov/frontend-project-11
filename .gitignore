@@ -10,6 +10,8 @@ dist
 
 assets
 
+# Ignore .DS_Store files
 .DS_Store
 
+# Ignore the .vscode folder
 .vscode/
